@@ -6,7 +6,7 @@ const Cour = require('../models/courModel')
 router.get ('/',async(req,res)=>{
 
     try{
-    let cour = await Cour.find()
+    let cour = await Cour.find().populate('refSession','_id nomSession');
     res.send(cour)
 
     }
@@ -27,11 +27,11 @@ router.get('/:nomCour', async(req,res)=>{
 })
 
 //add cour
-router.post('/addcour', async(req,res)=>{
+router.post('/addcour/:idSession', async(req,res)=>{
  try{
   const newcour = new Cour({
-
-    nomCour:req.body.nomCour
+    nomCour:req.body.nomCour,
+    refSession:req.params.idSession
   }) 
      await newcour.save();
      res.send(newcour)

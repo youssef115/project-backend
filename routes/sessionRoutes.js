@@ -5,7 +5,7 @@ const Session=require("../models/sessionModel");
 //get all session 
 router.get("/",async (req,res)=>{
     try{
-        await Session.find({})
+        await Session.find({}).populate('refEnseigant').populate('refEtudiant')
         .then(sessions=>{
             res.send(sessions)
         })
@@ -29,14 +29,15 @@ router.get('/:nomSession', async(req,res)=>{
 
 
 //add a new session 
-router.post('/addSession',async(req,res)=>{
+router.post('/addSession/:idEnseigant/:idEtudiant',async(req,res)=>{
     try{
        const newSession= new Session({
-      
-        nomSession:req.body.nomSession
+        nomSession:req.body.nomSession,
+        refEnseigant:req.params.idEnseigant,
+        refEtudiant:req.params.idEtudiant
        })
         await newSession.save();
-        res.send('saved')
+        res.send(newSession)
     }
     catch(err){
         res.send(err)

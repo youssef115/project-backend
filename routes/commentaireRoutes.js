@@ -14,12 +14,12 @@ router.get("/",async (req,res)=>{
     }
 })
 
-router.post("/addcommentaire",async(req,res)=>{
+router.post("/addcommentaire/:idSender",async(req,res)=>{
     try{
         const newcommentaire=new Commentaire({
             commentaire:req.body.commentaire,
             temps:Date.now(),
-            sender:req.body.sender
+            refSender:req.params.idSender
             
         })
         await newcommentaire.save();
