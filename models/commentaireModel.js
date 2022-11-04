@@ -9,10 +9,10 @@ const Commentaire=mongoose.Schema({
         type:Date,
         
     },
-    refSender:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'etudiant',
-        ref:'enseigant',
+    ref:{
+        type:String,
+        
+        
         required:true
     }
 

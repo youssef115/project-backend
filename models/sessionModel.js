@@ -8,13 +8,10 @@ const Session=mongoose.Schema({
         maxLength:50,
         minLength:5 
     },
-    refEnseigant:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'enseigant'
-    },
-    refEtudiant:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'etudiant'
+   
+    ref:{
+        type:String,
+        
     }
 })
     module.exports=mongoose.model("Session",Session);

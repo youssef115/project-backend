@@ -1,31 +1,58 @@
 const express = require('express')
 const router=express.Router()
 const Notif=require('../models/notifModel')
+const Etudiant=require('../models/etudiantModel');
+const Enseigant=require('../models/enseigantModel');
 
+async function addMissingData(session){
+    try{
+           const user=await findTheUser(session.ref);
+           session.ref=user;
+           //console.log("function call ",session)
+            return session;    
+    }catch(err){
+       console.log(err);
+    }
+   }
 
 //get all notif
 router.get('/',async(req,res)=>{
     try{
-        let notif = await Notif.find({}).populate('refEnseigant').populate('refEtudiant')
-        res.send(notif)
+        let notif = await Notif.find({})
+        const asyncRes = await Promise.all(notif.map(async e=> await addMissingData(e)));
+       console.log(asyncRes)
+         res.send(asyncRes)
+        
     }
     catch(err){
         res.send(err)
     }
 })
+//this methode is used to find the user if he is 'etudiant' or 'enseigant' then get all his information
 
-router.post('/addnotif/:idEnseigant/:idEtudiant',async(req,res)=>{
+async function findTheUser(id){
+    try{
+    let enseigant=await Enseigant.findById(id).select("nom prenom ncin")
+    if(enseigant!=null){
+        return enseigant
+    }else{
+        let etudiant =await Etudiant.findById(id).select("nom prenom ncin")
+        return etudiant;
+    }
+    }catch(err){
+        console.log(err)
+    }
+}
+
+router.post('/addnotif/:id',async(req,res)=>{
 
     try{
-       
-        
            const addnotif = new Notif ({
                 notif:req.body.notif,
-                refEnseigant:req.params.idEnseigant,
-                refEtudiant:req.params.idEtudiant,
+                ref:req.params.id,
             })
          await addnotif.save() 
-         console.log(req.params.idEnseigant)
+        
          res.send(addnotif)
     }
     catch(err){
