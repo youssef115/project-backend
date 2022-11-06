@@ -11,6 +11,10 @@ router.get('/',async (req,res)=>{
         console.log(err);
     }
 })
+//get the number of the 'etudiant'
+router.get("/numberOf",async (req,res)=>{
+    await Etudiant.find().count().then(result=>res.json({number:result})).catch(err=>console.log(err))
+})
 
 // get only one etudiant
 router.get("/:cin",async(req,res)=>{
