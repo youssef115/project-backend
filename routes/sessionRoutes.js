@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const Session=require("../models/sessionModel");
 //new added
-const Enseigant=require("../models/enseigantModel");
+const Enseigant=require("../models/enseignantModel");
 const Etudiant=require("../models/etudiantModel");
 const R = require('ramda');
 

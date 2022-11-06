@@ -10,7 +10,7 @@ app.use(helmet());
 app.use(morgan('tiny'))
 app.use(bodyParser.json());
 //import the routers 
-const enseigantRouters=require('./routes/enseigantRoutes');
+const enseignantRouters=require('./routes/enseignantRoutes');
 const etudiantRouters=require("./routes/etudiantRoutes");
 const adminRouters=require('./routes/adminRoutes');
 const messageRouters=require("./routes/messageRoutes");
@@ -19,7 +19,7 @@ const courRouters= require('./routes/courRoutes');
 const notifRouters=require('./routes/notifRoutes');
 const commentaireRouters=require('./routes/commentaireRoutes');
 // use for the routes
-app.use('/enseigant',enseigantRouters);
+app.use('/enseignant',enseignantRouters);
 app.use('/etudiant',etudiantRouters);
 app.use('/admin',adminRouters);
 app.use("/message",messageRouters);

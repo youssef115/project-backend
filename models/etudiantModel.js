@@ -58,6 +58,10 @@ const Etudiant=mongoose.Schema({
         required:true,
         minLength:2,
         maxLength:15
+    },
+    etat:{
+        type:Boolean,
+        required:true
     }
 
 

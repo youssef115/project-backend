@@ -2,7 +2,7 @@ const express = require('express')
 const router=express.Router()
 const Notif=require('../models/notifModel')
 const Etudiant=require('../models/etudiantModel');
-const Enseigant=require('../models/enseigantModel');
+const Enseigant=require('../models/enseignantModel');
 
 async function addMissingData(session){
     try{

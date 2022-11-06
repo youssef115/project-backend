@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 
-const Enseigant=mongoose.Schema({
+const Enseignant=mongoose.Schema({
     nom:{
         type: String,
         required:true,
@@ -24,7 +24,7 @@ const Enseigant=mongoose.Schema({
     mot_de_passe:{
         type:String,
         required:true,
-        maxLength:30,
+        
         minLength:5
     },
     ncin:{
@@ -57,9 +57,16 @@ const Enseigant=mongoose.Schema({
         type:String,
         required:true,
         minLength:2,
-        maxLength:15
+        maxLength:30
+    },
+    fichier:{
+        type:String
+    },
+   etat:{
+        type:Boolean,
+        required:true
     }
 
 })
 
-module.exports=mongoose.model('enseigant',Enseigant);
+module.exports=mongoose.model('enseigant',Enseignant);
