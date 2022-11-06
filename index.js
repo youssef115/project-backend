@@ -5,10 +5,12 @@ const morgan = require('morgan')
 const router=express.Router();
 const helmet=require('helmet');
 const bodyParser=require('body-parser');
+const cors=require('cors')
 //for dev env
 app.use(helmet());
 app.use(morgan('tiny'))
 app.use(bodyParser.json());
+app.use(cors());
 //import the routers 
 const enseignantRouters=require('./routes/enseignantRoutes');
 const etudiantRouters=require("./routes/etudiantRoutes");
