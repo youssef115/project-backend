@@ -5,7 +5,7 @@ const Enseignant=require("../models/enseignantModel");
 //get all the enseigant
 router.get("/",async (req,res)=>{
     try{
-        await Enseignant.find({}).then(result=>{
+        await Enseignant.find({}).select("nom prenom ncin ntel email specialite").then(result=>{
             res.send(result);
         });
         
@@ -22,6 +22,20 @@ router.get('/numberOf',async (req,res)=>{
     }catch(err){
         console.log(err)
     }
+})
+//get only the valid teachers
+router.get("/valid",async(req,res)=>{
+    
+        await Enseignant.find({etat:true}).select("nom prenom ncin ntel email specialite")
+        .then(result=>res.send(result))
+        .catch(err=>console.log(err))
+    
+})
+//get only the not valid teachers
+router.get("/notValid",async(req,res)=>{
+    await Enseignant.find({etat:false}).select("nom prenom ncin ntel email specialite")
+    .then(result=>res.send(result))
+    .catch(err=>console.log(err))
 })
 // get only one enseigant 
 router.get("/:cin",async(req,res)=>{
