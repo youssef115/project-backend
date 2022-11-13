@@ -67,7 +67,8 @@ router.post("/addEtudiant",async(req,res)=>{
             ntel:req.body.ntel,
             email:req.body.email,
             ville:req.body.ville,
-            classe:req.body.classe
+            classe:req.body.classe,
+            etat:false
         })
         await newEtudiant.save();
         res.send(newEtudiant)

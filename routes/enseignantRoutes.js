@@ -14,6 +14,9 @@ router.get("/",async (req,res)=>{
         console.log(err);
     }
 });
+router.get("/getOne/:cin",async(req,res)=>{
+    await Enseignant.findOne({ncin:req.params.cin}).then(result=>res.send(result)).catch(err=>console.log(err))
+})
 // get the number of the 'enseigant'
 router.get('/numberOf',async (req,res)=>{
     try{
