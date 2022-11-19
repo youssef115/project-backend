@@ -37,15 +37,27 @@ router.get("/notValid",async(req,res)=>{
 })
 
 
-// Update etudiant change name
-router.put("/updateEtudiant/:cin/:name",async (req,res)=>{
-    try{    
-        let upEtudiant=await Etudiant.findOneAndUpdate({ncin:req.params.cin},{nom:req.params.name});
-        res.send(upEtudiant);
+//update student data 
+router.put("/updateEtudiant/:id",async (req,res)=>{
+    try{
+
+        let e=await Etudiant.findOneAndUpdate({_id:req.params.id},
+            {
+                nom: req.body.nom,
+                prenom: req.body.prenom,
+                login: req.body.login,
+                ncin: req.body.ncin,
+                ntel: req.body.ntel,
+                email: req.body.email,
+                ville: req.body.ville,
+                classe: req.body.classe,
+            })
+            
+        res.send(e)        
     }catch(err){
         console.log(err)
     }
-})
+});
 router.delete("/deleteEtudiant/:cin",async (req,res)=>{
     try{
         let detEtudiant=await Etudiant.findOneAndRemove({ncin:req.params.cin})

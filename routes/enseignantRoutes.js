@@ -50,22 +50,36 @@ router.get("/:cin",async(req,res)=>{
     }
 })
 
-//update enseigant change the name
-router.put("/updateEnseigant/:CIN/:name",async (req,res)=>{
+//update teacher data 
+router.put("/updateEnseigant/:id",async (req,res)=>{
     try{
 
-        let e=await Enseignant.findOneAndUpdate({ncin:req.params.CIN},{nom:req.params.name})
+        let e=await Enseignant.findOneAndUpdate({_id:req.params.id},
+            {
+                nom: req.body.nom,
+                prenom: req.body.prenom,
+                login: req.body.login,
+                ncin: req.body.ncin,
+                ntel: req.body.ntel,
+                email: req.body.email,
+                ville: req.body.ville,
+                specialite: req.body.specialite,
+            })
+            
         res.send(e)        
     }catch(err){
         console.log(err)
     }
 });
 
+
+
 //delete enseigant
-router.delete("/deleteEnseigant/:CIN",async (req,res)=>{
+router.delete("/deleteEnseigant/:cin",async (req,res)=>{
     try{
-       let e= await Enseignant.findOneAndDelete({ncin:req.params.CIN});
-        res.send(e)
+       let e= await Enseignant.findOneAndDelete({ncin:req.params.cin});
+       
+       res.send(e)
     }catch(err){
         console.error(err);
     }
