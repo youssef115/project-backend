@@ -90,4 +90,11 @@ router.post("/addEtudiant",async(req,res)=>{
     }
 })
 
+// validate student
+router.put("/validateUser/:cin",async(req,res)=>{
+    await Etudiant.findOneAndUpdate({ncin:req.params.cin},{etat:true})
+    .then(result=>res.send(result))
+    .catch(e=>console.log(e))
+})
+
 module.exports =router;

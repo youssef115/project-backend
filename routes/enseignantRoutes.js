@@ -1,6 +1,12 @@
 const express=require("express");
 const router=express.Router();
+// const multer=require('multer')
 const Enseignant=require("../models/enseignantModel");
+
+//multer configuration
+// const storage=multer.diskStorage({
+// destination
+// })
 
 //get all the enseigant
 router.get("/",async (req,res)=>{
@@ -14,6 +20,7 @@ router.get("/",async (req,res)=>{
         console.log(err);
     }
 });
+//get one 
 router.get("/getOne/:cin",async(req,res)=>{
     await Enseignant.findOne({ncin:req.params.cin}).then(result=>res.send(result)).catch(err=>console.log(err))
 })
@@ -49,7 +56,12 @@ router.get("/:cin",async(req,res)=>{
         console.log(err);
     }
 })
-
+// make teacher validate 
+router.put("/validateUser/:cin",async(req,res)=>{
+    await Enseignant.findOneAndUpdate({ncin:req.params.cin},{etat:true})
+    .then(result=>res.send(result))
+    .catch(e=>console.log(e))
+})
 //update teacher data 
 router.put("/updateEnseigant/:id",async (req,res)=>{
     try{
