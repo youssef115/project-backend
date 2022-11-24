@@ -59,6 +59,10 @@ const Etudiant=mongoose.Schema({
         minLength:2,
         maxLength:15
     },
+    fichier:{
+        type:String,
+        required:true
+    },
     etat:{
         type:Boolean,
         required:true

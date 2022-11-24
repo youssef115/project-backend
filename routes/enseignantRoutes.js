@@ -2,7 +2,8 @@ const express=require("express");
 const router=express.Router();
 // const multer=require('multer')
 const Enseignant=require("../models/enseignantModel");
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 //multer configuration
 // const storage=multer.diskStorage({
 // destination
@@ -119,6 +120,116 @@ router.post("/addEnseignant",async (req,res)=>{
         console.log(err);
     }
 })
-
+// to signup enseigant
+router.post("/signup", async (req, res) => {
+    console.log("yesss");
+        bcrypt.hash(req.body.mot_de_passe, 10, async function (err, hashedPass) {
+            if (err) {
+                res.json({
+                    error: err
+                })
+            }
+            else {
+                console.log(hashedPass);
+            }
+            let enseignant = await Enseigant.findOne({ ncin: req.body.ncin });
+            if (enseignant) {
+                return res.send({ message: "User already exist" });
+            } else {
+                try {
+                    // Insert the new user if they do not exist yet
+                    let Enseignant = await new Enseigant({
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        login: req.body.login,
+                        mot_de_passe: hashedPass,
+                        ncin: req.body.ncin,
+                        ntel: req.body.ntel,
+                        email: req.body.email,
+                        ville: req.body.ville,
+                        specialite: req.body.specialite,
+                        fichier:req.body.fichier,
+                        etat:false
+    
+    
+                    });
+                    console.log("file added");
+    
+                    await Enseignant.save().then(Enseigant => {
+                        res.json({
+                            message: "user added successfully"
+                        })
+                    });
+                    res.send(Enseignant);
+                    console.log("okkk");
+    
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+    
+    
+    
+    
+    
+    
+    
+        })
+    
+    })
+    
+    //signin enseignant
+    router.post('/signin/', async (req, res) => {
+        const { email, mot_de_passe } = req.body;
+        // if (!email || !mot_de_passe) {
+        //     return res.status(422).send({ error: 'Must provide email and password' })
+        // }
+        // console.log("okkkkk");
+        try {
+            console.log("try");
+            const user = await Enseigant.findOne({ email });
+            console.log("user found");
+            console.log(user);
+            if (user) {
+                bcrypt.compare(mot_de_passe, user.mot_de_passe, function (err, result) {
+                    if (err) {
+                        console.log("err");
+                        res.json({
+                            error: err
+                        })
+                    }
+                    if (result) {
+                        console.log("result");
+                        let token = jwt.sign({ nom: user.nom }, 'verySecretValue')
+    
+                        res.send({
+                            message: 'login successful',
+                            token
+                        })
+                    } else {
+                        res.send({
+                            message: "Password does not matched"
+                        })
+                    }
+                })
+            } else {
+                res.send({
+                    message: 'No user found'
+                })
+            }
+    
+        } catch (err) {
+            console.log(err);
+        }
+    
+        console.log("okkkkk");
+        try {
+    
+    
+    
+        } catch (err) {
+            return res.status(422).send({ error: 'errr' });
+        }
+    });
 
 module.exports =router;
