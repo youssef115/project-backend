@@ -132,13 +132,13 @@ router.post("/signup", async (req, res) => {
             else {
                 console.log(hashedPass);
             }
-            let enseignant = await Enseigant.findOne({ ncin: req.body.ncin });
+            let enseignant = await Enseignant.findOne({ ncin: req.body.ncin });
             if (enseignant) {
                 return res.send({ message: "User already exist" });
             } else {
                 try {
                     // Insert the new user if they do not exist yet
-                    let Enseignant = await new Enseigant({
+                    let Enseignant = await new Enseignant({
                         nom: req.body.nom,
                         prenom: req.body.prenom,
                         login: req.body.login,
@@ -155,7 +155,7 @@ router.post("/signup", async (req, res) => {
                     });
                     console.log("file added");
     
-                    await Enseignant.save().then(Enseigant => {
+                    await Enseignant.save().then(Enseignant => {
                         res.json({
                             message: "user added successfully"
                         })
@@ -187,7 +187,7 @@ router.post("/signup", async (req, res) => {
         // console.log("okkkkk");
         try {
             console.log("try");
-            const user = await Enseigant.findOne({ email });
+            const user = await Enseignant.findOne({ email });
             console.log("user found");
             console.log(user);
             if (user) {
