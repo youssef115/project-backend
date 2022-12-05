@@ -131,12 +131,12 @@ router.post("/signup",upload.single('fichier'), async (req, res) => {
                       ville: req.body.ville,
                       classe: req.body.classe,
                     // fichier:req.files.path,
-                     fichier:req.file.filename,
+                     //fichier:req.body.name,
                       etat:false
   
                   })
                   
-                      console.log(req.files);
+                     // console.log(req.files);
                      
                   
                   
@@ -148,9 +148,9 @@ router.post("/signup",upload.single('fichier'), async (req, res) => {
                   console.log("fichier added ");
   
                   await Etud.save().then(Etudiant => {
-                      res.send(upload.single("fichier"))
+                      //res.send(upload.single("fichier"))
                       res.json({
-                          message: "files added okkkkk "
+                          message: "user added successfully "
                       })
                       
                   });
@@ -197,7 +197,7 @@ router.post("/signup",upload.single('fichier'), async (req, res) => {
                   }
                   if (result) {
                       console.log("result");
-                      let token = jwt.sign({ nom: user.nom }, 'verySecretValue')
+                      let token = jwt.sign({ nom: user.nom ,login:user.login}, 'verySecretValue')
   
                       res.send({
                           message: 'login successful',

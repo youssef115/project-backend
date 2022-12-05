@@ -138,7 +138,7 @@ router.post("/signup", async (req, res) => {
             } else {
                 try {
                     // Insert the new user if they do not exist yet
-                    let Enseignant = await new Enseignant({
+                    let E = await new Enseignant({
                         nom: req.body.nom,
                         prenom: req.body.prenom,
                         login: req.body.login,
@@ -148,19 +148,19 @@ router.post("/signup", async (req, res) => {
                         email: req.body.email,
                         ville: req.body.ville,
                         specialite: req.body.specialite,
-                        fichier:req.body.fichier,
+                       // fichier:req.body.fichier,
                         etat:false
     
     
                     });
                     console.log("file added");
     
-                    await Enseignant.save().then(Enseignant => {
+                    await E.save().then(() => {
                         res.json({
                             message: "user added successfully"
                         })
                     });
-                    res.send(Enseignant);
+                    res.send(E);
                     console.log("okkk");
     
                 } catch (err) {

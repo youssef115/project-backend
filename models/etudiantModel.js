@@ -24,7 +24,7 @@ const Etudiant=mongoose.Schema({
     mot_de_passe:{
         type:String,
         required:true,
-        maxLength:30,
+        maxLength:60,
         minLength:5
     },
     ncin:{
@@ -61,7 +61,7 @@ const Etudiant=mongoose.Schema({
     },
     fichier:{
         type:String,
-        required:true
+        //required:true
     },
     etat:{
         type:Boolean,
