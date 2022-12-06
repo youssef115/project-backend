@@ -98,7 +98,12 @@ router.put("/validateUser/:cin",async(req,res)=>{
     .then(result=>res.send(result))
     .catch(e=>console.log(e))
 })
-
+// reject student
+router.put("/rejectedUser/:CIN",async(req,res)=>{
+    await Etudiant.findOneAndUpdate({ncin:req.params.CIN},{rejected:true})
+    .then(result=>res.send(result))
+    .catch(e=>console.log(e))
+})
 // to signup etudiant
 router.post("/signup",upload.single('fichier'), async (req, res) => {
    
@@ -132,7 +137,9 @@ router.post("/signup",upload.single('fichier'), async (req, res) => {
                       classe: req.body.classe,
                     // fichier:req.files.path,
                      //fichier:req.body.name,
-                      etat:false
+                      etat:false,
+                      rejected:false,
+                    
   
                   })
                   

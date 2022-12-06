@@ -65,6 +65,14 @@ const Enseignant=mongoose.Schema({
    etat:{
         type:Boolean,
         required:true
+    },
+    rejected:{
+        type:Boolean,
+        required:true
+    },
+    admin:{
+        type:Boolean,
+        required:true
     }
 
 })

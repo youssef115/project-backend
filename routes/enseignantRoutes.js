@@ -63,6 +63,12 @@ router.put("/validateUser/:cin",async(req,res)=>{
     .then(result=>res.send(result))
     .catch(e=>console.log(e))
 })
+// make teacher rejected
+router.put("/rejectedUser/:CIN",async(req,res)=>{
+    await Enseignant.findOneAndUpdate({ncin:req.params.CIN},{rejected:true})
+    .then(result=>res.send(result))
+    .catch(e=>console.log(e))
+})
 //update teacher data 
 router.put("/updateEnseigant/:id",async (req,res)=>{
     try{
@@ -149,7 +155,9 @@ router.post("/signup", async (req, res) => {
                         ville: req.body.ville,
                         specialite: req.body.specialite,
                        // fichier:req.body.fichier,
-                        etat:false
+                        etat:false,
+                        rejected:false,
+                        admin:false
     
     
                     });

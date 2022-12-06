@@ -66,7 +66,12 @@ const Etudiant=mongoose.Schema({
     etat:{
         type:Boolean,
         required:true
+    },
+    rejected:{
+        type:Boolean,
+        required:true
     }
+    
 
 
 })
