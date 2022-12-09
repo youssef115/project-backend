@@ -9,6 +9,25 @@ const jwt = require('jsonwebtoken')
 // destination
 // })
 
+// check if the teacher is an admin
+router.post("/isAdmin",async (req,res)=>{
+    const { email, mot_de_passe } = req.body;
+    const user=await Enseignant.findOne({email})
+    if(user){
+        console.log("user exist")
+        if(user.admin){
+            console.log("this user is an admin")
+            res.json({type:"admin"})
+        }else{
+            console.log("this user is not an admin")
+            res.json({type:"notAdmin"})
+        }
+    }else{
+        console.warn("user not exist")
+        res.send("this user is not exist ")
+    }
+   
+})    
 //get all the enseigant
 router.get("/",async (req,res)=>{
     try{
@@ -239,5 +258,6 @@ router.post("/signup", async (req, res) => {
             return res.status(422).send({ error: 'errr' });
         }
     });
+
 //push
 module.exports =router;
